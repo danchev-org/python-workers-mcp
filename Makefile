@@ -23,12 +23,12 @@ test-setup:
 # Run development server
 dev:
 	@echo "Starting development server..."
-	npx wrangler@latest dev
+	npx wrangler@4.14.0 dev
 
 # Deploy to Cloudflare Workers
 deploy:
 	@echo "Deploying to Cloudflare Workers..."
-	npx wrangler@latest deploy
+	npx wrangler@4.14.0 deploy
 
 # Run tests
 test: test-setup
