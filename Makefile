@@ -7,13 +7,13 @@ all: setup vendor
 setup:
 	@echo "Setting up Python environment..."
 	uv venv .venv
-	. .venv/bin/activate && uv pip install pyodide-build
-	pyodide venv .venv-pyodide
+	source .venv/bin/activate && uv pip install pyodide-build
+	uv run pyodide venv .venv-pyodide
 
 # Install vendored packages
 vendor:
 	@echo "Installing vendored packages..."
-	.venv-pyodide/bin/pip install -t src/vendor -r vendor.txt
+	.venv-pyodide/bin/pip install --no-deps --upgrade --pre -t src/vendor -r vendor.txt
 
 # Install test dependencies
 test-setup:

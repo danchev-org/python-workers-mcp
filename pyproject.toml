@@ -5,8 +5,10 @@ description = "Add your description here"
 readme = "README.md"
 requires-python = ">=3.12"
 dependencies = [
-    "mcp>=1.6.0",
+    "mcp>=1.9.3",
     "requests>=2.32.3",
+    "openmarkets>=0.1.0.dev53",
+    "structlog>=25.4.0",
 ]
 
 [dependency-groups]

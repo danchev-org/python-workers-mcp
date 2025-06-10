@@ -13,31 +13,40 @@ def setup_server():
 
     from exceptions import HTTPException, http_exception
 
-    mcp = FastMCP("Demo")
+    mcp = FastMCP("Open Markets Server", "0.0.1")
 
-    @mcp.tool()
-    def add(a: int, b: int) -> int:
-        """Add two numbers"""
-        return a + b
+    from openmarkets.tools import (
+        register_analyst_data_tools,
+        register_calendar_tools,
+        register_corporate_actions_tools,
+        register_crypto_tools,
+        register_extended_market_tools,
+        register_financial_statements_tools,
+        register_fund_tools,
+        register_historical_data_tools,
+        register_market_data_tools,
+        register_news_tools,
+        register_options_tools,
+        register_stock_info_tools,
+        register_technical_analysis_tools,
+    )
 
-    @mcp.resource("greeting://{name}")
-    def get_greeting(name: str) -> str:
-        """Get a personalized greeting"""
-        return f"Hello, {name}!"
 
-    @mcp.tool()
-    def calculate_bmi(weight_kg: float, height_m: float) -> float:
-        """Calculate BMI given weight in kg and height in meters"""
-        return weight_kg / (height_m**2)
+    # Register all tool modules
+    register_stock_info_tools(mcp)
+    register_historical_data_tools(mcp)
+    register_analyst_data_tools(mcp)
+    register_financial_statements_tools(mcp)
+    register_options_tools(mcp)
+    register_calendar_tools(mcp)
+    register_market_data_tools(mcp)
+    register_crypto_tools(mcp)
+    register_technical_analysis_tools(mcp)
+    register_corporate_actions_tools(mcp)
+    register_extended_market_tools(mcp)
+    register_news_tools(mcp)
+    register_fund_tools(mcp)
 
-    @mcp.prompt()
-    def echo_prompt(message: str) -> str:
-        """Create an echo prompt"""
-        return f"Please process this message: {message}"
-
-    app = mcp.sse_app()
-    app.add_exception_handler(HTTPException, http_exception)
-    app.add_middleware(CORSMiddleware, allow_origins=["*"], allow_methods=["*"], allow_headers=["*"])
     return mcp, app
 
 
